@@ -1,6 +1,6 @@
 <template>
   <div class="thanks">
-    <h1 class="subheading grey--text">Thank you for your vote!</h1>
+    <h1 class="subheading grey--text">Thank you for voting!</h1>
 
     <v-container class="my-5">
       <p>
