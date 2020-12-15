@@ -18,14 +18,17 @@
           </v-card-title>
           <v-card-text>
             <v-form class="px-3" ref="form">
+              <h4 class="mt-5">About you</h4>
               <v-text-field
                 label="Your Name"
                 v-model="voterName"
                 :rules="inputRules"
               ></v-text-field>
+              <v-select :items="items" label="Select your country."></v-select>
+              <h4 class="mt-5">Your vote</h4>
               <v-radio-group v-model="radioGroup" :rules="radioRules">
                 <v-radio
-                  v-for="n in ['red','green', 'blue']"
+                  v-for="n in ['red', 'green', 'blue']"
                   :key="n"
                   :label="`${n}`"
                   :value="n"
@@ -50,6 +53,7 @@ export default {
       totalVuePackages: 0,
       inputRules: [(w) => w.length > 5 || "Minimum 5 chars required."],
       radioRules: [(w) => w != null || "No party has been selected."],
+      items: ["de", "fr", "us"],
     };
   },
   methods: {
@@ -59,7 +63,7 @@ export default {
       /// Maybe navigate to thank you screen.
       if (this.$refs.form.validate()) {
         console.log(this.voterName, this.radioGroup);
-        this.$router.push('thanks')
+        this.$router.push("thanks");
       } else {
         console.log("Input validation showed problems.");
       }
