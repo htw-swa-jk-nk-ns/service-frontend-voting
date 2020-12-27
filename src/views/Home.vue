@@ -55,7 +55,8 @@ export default {
       inputRules: [(w) => w.length > 5 || "Minimum 5 chars required."],
       radioRules: [(w) => w != null || "No party has been selected."],
       selectRules: [(w) => w != null || "No country has been selected."],
-      postURL: "https://reqbin.com/echo/post/json",
+      postURL:
+        "http://cors-anywhere.herokuapp.com/https://webhook.site/4442ad66-8721-4774-ac71-543e49583b28",
       items: [...this.getCountries()],
     };
   },
