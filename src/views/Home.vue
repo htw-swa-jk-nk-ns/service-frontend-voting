@@ -111,6 +111,17 @@ export default {
     },
   },
   created() {
+    console.log(
+      "Value of VUE_APP_POST_URL: " + process.env.VUE_APP_POST_URL + "\n"
+    );
+
+    let env_url = process.env.VUE_APP_POST_URL;
+    if (typeof env_url !== "undefined" && env_url) {
+      this.postURL = env_url;
+    }
+
+    console.log("Value of url field: " + this.postURL + "\n");
+
     // Simple GET request using fetch
     // Should later be used to fetch title and questions.
     fetch("https://api.npms.io/v2/search?q=vue")
