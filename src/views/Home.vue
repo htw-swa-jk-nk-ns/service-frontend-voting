@@ -44,6 +44,9 @@
 <script>
 import country from "countries-list";
 
+///DEBUG URL
+///http://cors-anywhere.herokuapp.com/https://webhook.site/4442ad66-8721-4774-ac71-543e49583b28
+
 export default {
   data() {
     return {
@@ -55,8 +58,7 @@ export default {
       inputRules: [(w) => w.length > 5 || "Minimum 5 chars required."],
       radioRules: [(w) => w != null || "No party has been selected."],
       selectRules: [(w) => w != null || "No country has been selected."],
-      postURL:
-        "http://cors-anywhere.herokuapp.com/https://webhook.site/4442ad66-8721-4774-ac71-543e49583b28",
+      postURL: "http://service-serving-layer-service:8081",
       items: [...this.getCountries()],
     };
   },
@@ -94,8 +96,13 @@ export default {
       }
     },
     postVote(vote) {
+      //Log constructed vote object
       console.log(vote);
+      console.log("\n");
+
+      //Log used PostURL
       var url = this.postURL;
+      console.log("POST_URL::" + url + "\n");
 
       // construct an HTTP request
       var xhr = new XMLHttpRequest();
