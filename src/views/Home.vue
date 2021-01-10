@@ -58,7 +58,7 @@ export default {
       inputRules: [(w) => w.length > 5 || "Minimum 5 chars required."],
       radioRules: [(w) => w != null || "No party has been selected."],
       selectRules: [(w) => w != null || "No country has been selected."],
-      postURL: "http://service-serving-layer-service:8080/vote",
+      postURL: "http://service-serving-layer:8080/vote",
       items: [...this.getCountries()],
     };
   },
