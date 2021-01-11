@@ -10,6 +10,7 @@
         <span>Application</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      {{ this.$store.state.count }}
       <v-btn icon @click="navigateToGithub">
         <v-icon>mdi-heart</v-icon>
       </v-btn>
@@ -22,6 +23,10 @@
         >
           <v-list-item @click="drawer = false" router to="/">
             <v-list-item-title>Home Page</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item router to="/settings">
+            <v-list-item-title>Settings</v-list-item-title>
           </v-list-item>
 
           <v-list-item router to="/about">
