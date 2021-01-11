@@ -37,6 +37,14 @@
           </v-card-text>
         </v-card>
       </v-layout>
+      <v-alert
+        :value="alert"
+        elevation="8"
+        type="error"
+        transition="scale-transition"
+        max-width="250"
+        >Error while sending vote.
+      </v-alert>
     </v-container>
   </div>
 </template>
@@ -58,12 +66,15 @@ export default {
       inputRules: [(w) => w.length > 5 || "Minimum 5 chars required."],
       radioRules: [(w) => w != null || "No party has been selected."],
       selectRules: [(w) => w != null || "No country has been selected."],
-      postURL: "http://service-raw-data:8889/vote",
+      postURL: "http://service-serving-layer:8080/vote",
       items: [...this.getCountries()],
       options: [
-        "http://service-raw-data:8889/vote",
         "http://service-serving-layer:8080/vote",
+        "http://service-raw-data:8889/vote",
+        "http://service-serving-layer-service:8080/vote",
       ],
+      alert: false,
+      error: 0,
     };
   },
   methods: {
@@ -89,17 +100,23 @@ export default {
       /// Maybe navigate to thank you screen.
       if (this.$refs.form.validate()) {
         //console.log(this.voterName, this.radioGroup, this.selectModel);
-        this.postVote({
-          name: this.voterName,
-          country: this.selectModel,
-          candidate: this.radioGroup,
-        });
-        this.$router.push("thanks");
+        this.postVote(
+          {
+            name: this.voterName,
+            country: this.selectModel,
+            candidate: this.radioGroup,
+          },
+          this.navigateToThanks,
+          this.errorHandling
+        );
       } else {
         console.log("Input validation showed problems.");
       }
     },
-    postVote(vote) {
+    navigateToThanks() {
+      this.$router.push("thanks");
+    },
+    postVote(vote, callback, errorCallback) {
       //Log constructed vote object
       console.log(vote);
       console.log("\n");
@@ -118,10 +135,30 @@ export default {
       // send the collected data as JSON
       xhr.send(JSON.stringify(vote));
 
+      xhr.onerror = function () {
+        console.log("Error occured");
+        this.error = 1;
+      };
+
       xhr.onloadend = function () {
         // done
-        console.log("Message sent.");
+        if (this.error == 0) {
+          console.log("Message sent.");
+          callback();
+        } else {
+          errorCallback();
+        }
       };
+    },
+    errorHandling() {
+      // reset form and display alert
+      this.error = 0;
+      this.alert = true;
+      //this.$refs.form.reset();
+      setTimeout(() => {
+        console.log("time out set");
+        this.alert = false;
+      }, 5000);
     },
   },
   created() {

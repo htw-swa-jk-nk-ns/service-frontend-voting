@@ -23,6 +23,9 @@ const store = new Vuex.Store({
     },
     setOne(state) {
       state.count = 1;
+    },
+    setTwo(state) {
+      state.count = 2;
     }
   }
 })

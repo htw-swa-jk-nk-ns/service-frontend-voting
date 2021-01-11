@@ -14,8 +14,9 @@
               <v-radio-group v-model="radioGroup">
                 <v-radio
                   v-for="n in [
-                    'http://service-raw-data:8889/vote',
                     'http://service-serving-layer:8080/vote',
+                    'http://service-raw-data:8889/vote',
+                    'http://service-serving-layer-service:8080/vote',
                   ]"
                   :key="n"
                   :label="`${n}`"
@@ -48,8 +49,9 @@ export default {
     return {
       radioGroup: null,
       options: [
-        "http://service-raw-data:8889/vote",
         "http://service-serving-layer:8080/vote",
+        "http://service-raw-data:8889/vote",
+        "http://service-serving-layer-service:8080/vote",
       ],
       alert: false,
     };
@@ -59,9 +61,12 @@ export default {
       if (this.radioGroup === this.options[0]) {
         this.$store.commit("setZero");
         console.log("print zero");
-      } else {
+      } else if (this.radioGroup === this.options[1]) {
         this.$store.commit("setOne");
         console.log("print one");
+      } else if (this.radioGroup === this.options[2]) {
+        this.$store.commit("setTwo");
+        console.log("print two");
       }
       console.log(this.$store.state.count);
       this.alert = true;
