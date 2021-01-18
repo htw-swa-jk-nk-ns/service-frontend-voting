@@ -14,9 +14,9 @@
               <v-radio-group v-model="radioGroup">
                 <v-radio
                   v-for="n in [
-                    'http://service-serving-layer:8080/vote',
-                    'http://service-raw-data:8889/vote',
-                    'http://service-serving-layer-service:8080/vote',
+                    'http://voting-app.com/vote',
+                    'http://voting-app.com/',
+                    'http://192.168.64.2:31117/vote',
                   ]"
                   :key="n"
                   :label="`${n}`"
@@ -49,9 +49,9 @@ export default {
     return {
       radioGroup: null,
       options: [
-        "http://service-serving-layer:8080/vote",
-        "http://service-raw-data:8889/vote",
-        "http://service-serving-layer-service:8080/vote",
+        "http://voting-app.com/vote",
+        "http://voting-app.com/",
+        "http://192.168.64.2:31117/vote",
       ],
       alert: false,
     };
