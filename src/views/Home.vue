@@ -112,10 +112,21 @@ export default {
         console.log("Input validation showed problems.");
       }
     },
+    errorHandling(evt) {
+      // Log error message
+      console.log("Error occurred :: " + evt);
+      // reset form and display alert
+      this.alert = true;
+      //this.$refs.form.reset();
+      setTimeout(() => {
+        console.log("time out set");
+        this.alert = false;
+      }, 5000);
+    },
     navigateToThanks() {
       this.$router.push("thanks");
     },
-    postVote(vote, callback, errorCallback) {
+    postVote(vote, successCallback, errorCallback) {
       //Log constructed vote object
       console.log(vote);
       console.log("\n");
@@ -131,33 +142,12 @@ export default {
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
+      // Error-Handling
+      xhr.addEventListener("error", errorCallback);
+      xhr.addEventListener("load", successCallback);
+
       // send the collected data as JSON
       xhr.send(JSON.stringify(vote));
-
-      xhr.onerror = function () {
-        console.log("Error occured");
-        this.error = 1;
-      };
-
-      xhr.onloadend = function () {
-        // done
-        if (this.error == 0) {
-          console.log("Message sent.");
-          callback();
-        } else {
-          errorCallback();
-        }
-      };
-    },
-    errorHandling() {
-      // reset form and display alert
-      this.error = 0;
-      this.alert = true;
-      //this.$refs.form.reset();
-      setTimeout(() => {
-        console.log("time out set");
-        this.alert = false;
-      }, 5000);
     },
   },
   created() {
